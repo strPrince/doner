@@ -8,6 +8,7 @@ import DonorDashboard from '../components/DonerDashboard';
 import Login from '../components/login';
 import Register from '../components/Register';
 import StudentDashboard from '../components/StudentDashboard';
+import MIS from '../components/MISportal';
 function App() {
   return (
    
@@ -20,6 +21,7 @@ function App() {
           <Route path="/donor" element={<DonorDashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/mis" element={<MIS />} />
         </Routes>
       </Router>
     
