@@ -16,7 +16,6 @@ import {
   createTheme,
   ThemeProvider
 } from '@mui/material';
-import Nav from './navbar';
 import { motion } from 'framer-motion';
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -63,7 +62,7 @@ const theme = createTheme({
 const MotionBox = motion(Box);
 const MotionCard = motion(Card);
 
-function StudentDashboard() {
+function AdminPanel() {
   const [tabValue, setTabValue] = useState(0);
 
   const scholarships = [
@@ -87,19 +86,15 @@ function StudentDashboard() {
     }
   ];
 
-  const applications = [
+  const donations = [
     {
       title: "Engineering Excellence",
       amount: "$12,000",
-      status: "Under Review",
-      progress: 60,
       date: "January 15, 2024"
     },
     {
       title: "Future Leaders",
       amount: "$5,000",
-      status: "Documents Pending",
-      progress: 30,
       date: "January 20, 2024"
     }
   ];
@@ -130,8 +125,6 @@ function StudentDashboard() {
 
   return (
     <ThemeProvider theme={theme}>
-      {/* add navbar as you need it */}
-      {/* <Nav /> */}
       <Box sx={{
         minHeight: '100vh',
         background: 'linear-gradient(135deg, #1a1a2e 0%, #0a0a14 100%)'
@@ -143,10 +136,10 @@ function StudentDashboard() {
         }}>
           <Container maxWidth="lg">
             <Typography variant="h4" color="primary.main" gutterBottom>
-              Welcome back, Alex
+              Welcome back, Admin
             </Typography>
             <Typography variant="subtitle1" color="text.secondary">
-              Track your scholarship applications and discover new opportunities
+              Manage scholarships, donations, and more
             </Typography>
           </Container>
         </Box>
@@ -155,30 +148,22 @@ function StudentDashboard() {
         <Container maxWidth="lg" sx={{ py: 4 }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 4 }}>
             <Tabs value={tabValue} onChange={handleTabChange} aria-label="dashboard tabs">
-              <Tab label="Available Scholarships" />
-              <Tab label="My Applications" />
-              <Tab label="Application Status" />
+              <Tab label="Manage Scholarships" />
+              <Tab label="Donation Records" />
+              <Tab label="Wallet Management" />
+              <Tab label="Reports" />
             </Tabs>
           </Box>
-
-          {/* Available Scholarships Tab */}
+{/* each tab have its own index and content to add or remove tab u can delete tabpanle component  */}
+          {/* Manage Scholarships Tab */}
           <TabPanel value={tabValue} index={0}>
             <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <Typography variant="h5" color="primary.main">
-                Available Scholarships
+                Manage Scholarships
               </Typography>
-              <TextField
-                size="small"
-                placeholder="Search scholarships..."
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                sx={{ width: 300 }}
-              />
+              <Button variant="contained" color="primary">
+                Add New Scholarship
+              </Button>
             </Box>
             <MotionBox
               variants={containerVariants}
@@ -219,7 +204,10 @@ function StudentDashboard() {
                         />
                       </Box>
                       <Button variant="contained" fullWidth>
-                        Apply Now
+                        Edit
+                      </Button>
+                      <Button variant="contained" color="secondary" fullWidth sx={{ mt: 1 }}>
+                        Delete
                       </Button>
                     </CardContent>
                   </MotionCard>
@@ -228,14 +216,14 @@ function StudentDashboard() {
             </MotionBox>
           </TabPanel>
 
-          {/* My Applications Tab */}
+          {/* Donation Records Tab */}
           <TabPanel value={tabValue} index={1}>
             <MotionBox
               variants={containerVariants}
               initial="hidden"
               animate="visible"
             >
-              {applications.map((application, index) => (
+              {donations.map((donation, index) => (
                 <MotionCard
                   variants={itemVariants}
                   key={index}
@@ -245,29 +233,14 @@ function StudentDashboard() {
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
                       <Box>
                         <Typography variant="h6" color="primary.main">
-                          {application.title}
+                          {donation.title}
                         </Typography>
                         <Typography variant="h5" color="text.primary">
-                          {application.amount}
+                          {donation.amount}
                         </Typography>
                       </Box>
-                      <Chip
-                        label={application.status}
-                        color="warning"
-                        size="small"
-                      />
-                    </Box>
-                    <Box sx={{ mt: 2 }}>
-                      <Typography variant="body2" color="text.secondary" gutterBottom>
-                        Application Progress
-                      </Typography>
-                      <LinearProgress
-                        variant="determinate"
-                        value={application.progress}
-                        sx={{ height: 8, borderRadius: 4 }}
-                      />
-                      <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                        {application.progress}% Complete
+                      <Typography variant="body2" color="text.secondary">
+                        {donation.date}
                       </Typography>
                     </Box>
                   </CardContent>
@@ -276,43 +249,40 @@ function StudentDashboard() {
             </MotionBox>
           </TabPanel>
 
-          {/* Application Status Tab */}
+          {/* Wallet Management Tab */}
           <TabPanel value={tabValue} index={2}>
-            <MotionCard
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <CardContent>
-                {applications.map((application, index) => (
-                  <MotionBox
-                    key={index}
-                    variants={itemVariants}
-                    sx={{
-                      py: 2,
-                      borderBottom: index < applications.length - 1 ? 1 : 0,
-                      borderColor: 'divider'
-                    }}
-                  >
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <Box>
-                        <Typography variant="h6" color="text.primary">
-                          {application.title}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Applied on: {application.date}
-                        </Typography>
-                      </Box>
-                      <Chip
-                        label={application.status}
-                        color="warning"
-                        size="small"
-                      />
-                    </Box>
-                  </MotionBox>
-                ))}
-              </CardContent>
-            </MotionCard>
+            <Box sx={{ mb: 4 }}>
+              <Typography variant="h5" color="primary.main">
+                Wallet Management
+              </Typography>
+              <TextField
+                fullWidth
+                label="Distribute Funds"
+                type="number"
+                sx={{ mt: 2, mb: 2 }}
+              />
+              <Button variant="contained" color="primary" fullWidth>
+                Distribute Funds
+              </Button>
+              <Button variant="contained" color="secondary" fullWidth sx={{ mt: 2 }}>
+                Track Transactions
+              </Button>
+            </Box>
+          </TabPanel>
+
+          {/* Reports Tab */}
+          <TabPanel value={tabValue} index={3}>
+            <Box sx={{ mb: 4 }}>
+              <Typography variant="h5" color="primary.main">
+                Reports
+              </Typography>
+              <Button variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
+                Generate Analytics
+              </Button>
+              <Button variant="contained" color="secondary" fullWidth sx={{ mt: 2 }}>
+                View Reports
+              </Button>
+            </Box>
           </TabPanel>
         </Container>
       </Box>
@@ -339,4 +309,4 @@ function TabPanel(props) {
   );
 }
 
-export default StudentDashboard;
+export default AdminPanel;

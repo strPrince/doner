@@ -1,12 +1,13 @@
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import './index.css';
-// import './App.css';
+
 import LandingPage from '../components/Landingpage';
-// import StudentDashboard from '../components/StudentDashboard';
-// import DonorDashboard from '../components/DonorDashboard';
+
+import AdminPanel from '../components/AdminDashboard';
+import DonorDashboard from '../components/DonerDashboard';
 import Login from '../components/login';
 import Register from '../components/Register';
+import StudentDashboard from '../components/StudentDashboard';
 function App() {
   return (
    
@@ -14,8 +15,9 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           {/* Uncomment and add paths for additional pages */}
-          {/* <Route path="/student" element={<StudentDashboard />} /> */}
-          {/* <Route path="/donor" element={<DonorDashboard />} /> */}
+          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/student" element={<StudentDashboard />} />
+          <Route path="/donor" element={<DonorDashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
